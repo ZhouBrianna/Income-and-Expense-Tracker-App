@@ -4,6 +4,7 @@ import model.ExpenseTransaction;
 import model.FinancialRecords;
 import model.IncomeTransaction;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class IncomeAndExpenseTracker {
@@ -51,6 +52,8 @@ public class IncomeAndExpenseTracker {
             calculateTotalExpense();
         } else if (command.equals("5")) {
             calculateNetIncome();
+        } else if (command.equals("6")) {
+            viewTransactions();
         } else {
             System.out.println("Selection not valid...");
         }
@@ -59,7 +62,7 @@ public class IncomeAndExpenseTracker {
     // MODIFIES: this
     // EFFECTS: initializes financialRecords
     private void init() {
-        financialRecords  = new FinancialRecords();
+        financialRecords = new FinancialRecords();
         input = new Scanner(System.in);
         input.useDelimiter("\n");
     }
@@ -72,6 +75,7 @@ public class IncomeAndExpenseTracker {
         System.out.println("\t3 -> Calculate Total Income");
         System.out.println("\t4 -> Calculate Total Expense");
         System.out.println("\t5 -> Calculate Net Income");
+        System.out.println("\t6 -> View Transactions");
         System.out.println("\tq -> quit");
     }
 
@@ -82,7 +86,8 @@ public class IncomeAndExpenseTracker {
         double amount = input.nextDouble();
 
         if (amount < 0.0) {
-            System.out.println("Cannot input negative income amount");
+            System.out.println("Cannot input negative income amount, please try again");
+            return;
         }
 
         System.out.println("Enter transaction date (YYYY-MM-DD): ");
@@ -103,7 +108,8 @@ public class IncomeAndExpenseTracker {
         double amount = input.nextDouble();
 
         if (amount < 0.0) {
-            System.out.println("Cannot input negative expense amount");
+            System.out.println("Cannot input negative expense amount, please try again");
+            return;
         }
 
         System.out.println("Enter transaction date (YYYY-MM-DD): ");
@@ -130,6 +136,32 @@ public class IncomeAndExpenseTracker {
         System.out.println("Net Income is: " + financialRecords.calculateNetIncome());
     }
 
+    private void viewTransactions() {
+        System.out.println("Income Transactions:");
+        List<IncomeTransaction> incomeTransactions = financialRecords.getIncomeTransactions();
+        if (incomeTransactions.isEmpty()) {
+            System.out.println("No income transactions.");
+        } else {
+            for (IncomeTransaction incomeTransaction : incomeTransactions) {
+                System.out.print("Amount: " + incomeTransaction.getIncomeAmount() + " ");
+                System.out.print("Date: " + incomeTransaction.getDate() + " ");
+                System.out.print("Description: " + incomeTransaction.getDescription() + " ");
+            }
+        }
+        System.out.println();
+        System.out.println("Expense Transactions:");
+        List<ExpenseTransaction> expenseTransactions = financialRecords.getExpenseTransactions();
+        if (expenseTransactions.isEmpty()) {
+            System.out.println("No expense transactions.");
+        } else {
+            for (ExpenseTransaction expenseTransaction : expenseTransactions) {
+                System.out.print("Amount: " + expenseTransaction.getExpenseAmount() + " ");
+                System.out.print("Date: " + expenseTransaction.getDate() + " ");
+                System.out.print("Description: " + expenseTransaction.getDescription() + " ");
+
+            }
+        }
+    }
 
 
 }
