@@ -27,10 +27,10 @@ public class FinancialRecords {
         incomeTransactions.remove(transaction);
     }
 
+    // EFFECTS: delete an expense transaction to the record
     public void deleteExpenseTransaction(ExpenseTransaction transaction) {
         expenseTransactions.remove(transaction);
     }
-
 
     // EFFECTS: calculate the total income
     public double calculatedTotalIncome() {
@@ -61,12 +61,12 @@ public class FinancialRecords {
         return netIncome;
     }
 
-    // Get a list of expense transactions
+    // EFFECTS: Get a list of expense transactions
     public List<ExpenseTransaction> getExpenseTransactions() {
         return expenseTransactions;
     }
 
-    // Get a list of income transactions
+    // EFFECTS: Get a list of income transactions
     public List<IncomeTransaction> getIncomeTransactions() {
         return incomeTransactions;
     }

@@ -16,8 +16,8 @@ public class IncomeAndExpenseTracker {
         runApp();
     }
 
-    // modifies: this
-    // effects: processes user input
+    // MODIFIES: this
+    // EFFECTS: processes user input
     private void runApp() {
         boolean isRunning = true;
         String command = null;
@@ -79,8 +79,8 @@ public class IncomeAndExpenseTracker {
         System.out.println("\tq -> quit");
     }
 
-    // modifies: this
-    // effects: add an income transaction to financial records
+    // MODIFIES: this
+    // EFFECTS: add an income transaction to financial records
     private void addIncomeTransaction() {
         System.out.println("Enter income amount: $");
         double amount = input.nextDouble();
@@ -101,8 +101,8 @@ public class IncomeAndExpenseTracker {
         System.out.println("Income transaction added successfully.");
     }
 
-    // modifies: this
-    // effects: add an expense transaction to financial records
+    // MODIFIES: this
+    // EFFECTS: add an expense transaction to financial records
     private void addExpenseTransaction() {
         System.out.println("Enter expense amount: $");
         double amount = input.nextDouble();
@@ -123,19 +123,22 @@ public class IncomeAndExpenseTracker {
         System.out.println("Expense transaction added successfully.");
     }
 
-
+    // EFFECTS: print out the total income
     private void calculateTotalIncome() {
-        System.out.println("Total Income is:" + financialRecords.calculatedTotalIncome());
+        System.out.println("Total Income is: $" + financialRecords.calculatedTotalIncome());
     }
 
+    // EFFECTS: print out the total expense
     private void calculateTotalExpense() {
-        System.out.println("Total Expense is:" + financialRecords.calculatedTotalExpense());
+        System.out.println("Total Expense is: $" + financialRecords.calculatedTotalExpense());
     }
 
+    // EFFECTS: print out the net income
     private void calculateNetIncome() {
-        System.out.println("Net Income is: " + financialRecords.calculateNetIncome());
+        System.out.println("Net Income is: $" + financialRecords.calculateNetIncome());
     }
 
+    // EFFECTS: view a list of income transactions and a list of expense transactions
     private void viewTransactions() {
         System.out.println("Income Transactions:");
         List<IncomeTransaction> incomeTransactions = financialRecords.getIncomeTransactions();
@@ -143,22 +146,20 @@ public class IncomeAndExpenseTracker {
             System.out.println("No income transactions.");
         } else {
             for (IncomeTransaction incomeTransaction : incomeTransactions) {
-                System.out.print("Amount: " + incomeTransaction.getIncomeAmount() + " ");
+                System.out.print("Amount: $" + incomeTransaction.getIncomeAmount() + " ");
                 System.out.print("Date: " + incomeTransaction.getDate() + " ");
-                System.out.print("Description: " + incomeTransaction.getDescription() + " ");
+                System.out.print("Description: " + incomeTransaction.getDescription() + "\n");
             }
         }
-        System.out.println();
         System.out.println("Expense Transactions:");
         List<ExpenseTransaction> expenseTransactions = financialRecords.getExpenseTransactions();
         if (expenseTransactions.isEmpty()) {
             System.out.println("No expense transactions.");
         } else {
             for (ExpenseTransaction expenseTransaction : expenseTransactions) {
-                System.out.print("Amount: " + expenseTransaction.getExpenseAmount() + " ");
+                System.out.print("Amount: $" + expenseTransaction.getExpenseAmount() + " ");
                 System.out.print("Date: " + expenseTransaction.getDate() + " ");
-                System.out.print("Description: " + expenseTransaction.getDescription() + " ");
-
+                System.out.print("Description: " + expenseTransaction.getDescription() + "\n");
             }
         }
     }
