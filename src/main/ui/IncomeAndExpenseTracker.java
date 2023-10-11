@@ -7,6 +7,7 @@ import model.IncomeTransaction;
 import java.util.List;
 import java.util.Scanner;
 
+// Income and Expense Tracker Application
 public class IncomeAndExpenseTracker {
     private FinancialRecords financialRecords;
     private Scanner input;
@@ -20,7 +21,7 @@ public class IncomeAndExpenseTracker {
     // EFFECTS: processes user input
     private void runApp() {
         boolean isRunning = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -42,20 +43,28 @@ public class IncomeAndExpenseTracker {
     // MODIFIES: this
     // EFFECTS: processes user command
     private void processCommand(String command) {
-        if (command.equals("1")) {
-            addIncomeTransaction();
-        } else if (command.equals("2")) {
-            addExpenseTransaction();
-        } else if (command.equals("3")) {
-            calculateTotalIncome();
-        } else if (command.equals("4")) {
-            calculateTotalExpense();
-        } else if (command.equals("5")) {
-            calculateNetIncome();
-        } else if (command.equals("6")) {
-            viewTransactions();
-        } else {
-            System.out.println("Selection not valid...");
+        switch (command) {
+            case "1":
+                addIncomeTransaction();
+                break;
+            case "2":
+                addExpenseTransaction();
+                break;
+            case "3":
+                calculateTotalIncome();
+                break;
+            case "4":
+                calculateTotalExpense();
+                break;
+            case "5":
+                calculateNetIncome();
+                break;
+            case "6":
+                viewTransactions();
+                break;
+            default:
+                System.out.println("Selection not valid...");
+                break;
         }
     }
 

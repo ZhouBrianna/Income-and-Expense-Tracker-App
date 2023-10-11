@@ -3,9 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Represents a financial records having a list of expense transactions and a list of income transactions
 public class FinancialRecords {
-    private List<ExpenseTransaction> expenseTransactions;
-    private List<IncomeTransaction> incomeTransactions;
+    private final List<ExpenseTransaction> expenseTransactions;
+    private final List<IncomeTransaction> incomeTransactions;
 
     public FinancialRecords() {
         expenseTransactions = new ArrayList<>();
