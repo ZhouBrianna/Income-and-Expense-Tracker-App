@@ -7,6 +7,7 @@
 
 - As a user, I want to be able to add an income that has amount, date and description to the financial records
 - As a user, I want to be able to add an expense that has amount, date and description to the financial records
+- As a user, I want to be able to view a list of income transactions and a list of expense transactions
 - As a user, I want to be able to calculate the total income based on the income transactions on the financial records
 - As a user, I want to be able to calculate the total expense based on the expense transactions on the financial records
 - As a user, I want to be able to calculate a net income based on the financial records

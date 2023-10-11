@@ -139,7 +139,7 @@ public class IncomeAndExpenseTracker {
     private void viewTransactions() {
         System.out.println("Income Transactions:");
         List<IncomeTransaction> incomeTransactions = financialRecords.getIncomeTransactions();
-        if (incomeTransactions.isEmpty()) {
+        if (financialRecords.getIncomeTransactions().isEmpty()) {
             System.out.println("No income transactions.");
         } else {
             for (IncomeTransaction incomeTransaction : incomeTransactions) {
