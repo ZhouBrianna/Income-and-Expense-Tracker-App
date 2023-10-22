@@ -3,17 +3,29 @@ package ui;
 import model.ExpenseTransaction;
 import model.FinancialRecords;
 import model.IncomeTransaction;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
 // Income and Expense Tracker Application
 public class IncomeAndExpenseTracker {
+    private static final String JSON_STORE = "./data/financialrecords.json";
     private FinancialRecords financialRecords;
     private Scanner input;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Effects: run the application
-    public IncomeAndExpenseTracker() {
+    public IncomeAndExpenseTracker() throws FileNotFoundException {
+        input = new Scanner(System.in);
+        financialRecords = new FinancialRecords();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runApp();
     }
 
@@ -22,6 +34,7 @@ public class IncomeAndExpenseTracker {
     private void runApp() {
         boolean isRunning = true;
         String command;
+        input = new Scanner(System.in);
 
         init();
 
@@ -62,6 +75,15 @@ public class IncomeAndExpenseTracker {
             case "6":
                 viewTransactions();
                 break;
+            case "7":
+                printTransactions();
+                break;
+            case "8":
+                saveTransactions();
+                break;
+            case "9":
+                loadTransactions();
+                break;
             default:
                 System.out.println("Selection not valid...");
                 break;
@@ -85,6 +107,9 @@ public class IncomeAndExpenseTracker {
         System.out.println("\t4 -> Calculate Total Expense");
         System.out.println("\t5 -> Calculate Net Income");
         System.out.println("\t6 -> View Transactions");
+        System.out.println("\t7 -> Print Transactions");
+        System.out.println("\t8 -> Save Transactions");
+        System.out.println("\t9 -> Load Transactions");
         System.out.println("\tq -> quit");
     }
 
@@ -172,6 +197,44 @@ public class IncomeAndExpenseTracker {
             }
         }
     }
+
+    // EFFECTS: prints all the transactions in the financial records
+    private void printTransactions() {
+        List<IncomeTransaction> incomeTransactions = financialRecords.getIncomeTransactions();
+        List<ExpenseTransaction> expenseTransactions = financialRecords.getExpenseTransactions();
+
+        for (IncomeTransaction incomeTransaction : incomeTransactions) {
+            System.out.println(incomeTransaction);
+        }
+
+        for (ExpenseTransaction expenseTransaction: expenseTransactions) {
+            System.out.println(expenseTransaction);
+        }
+    }
+
+    // EFFECTS: saves the transaction to file
+    private void saveTransactions() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(financialRecords);
+            jsonWriter.close();
+            System.out.println("Saved" + "financialRecords" + "to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads financial records from file
+    private void loadTransactions() {
+        try {
+            financialRecords = jsonReader.read();
+            System.out.println("Loaded " + "financialRecords"+ " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
 
 
 }

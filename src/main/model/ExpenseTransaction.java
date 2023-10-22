@@ -1,11 +1,17 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.util.Objects;
+
 // Represents an expense transaction having a ExpenseAmount, date and income description.
-public class ExpenseTransaction {
+public class ExpenseTransaction implements Writable {
     private double expenseAmount;
     private final String date;
     private String description;
 
+    // Construct an expense transaction with the given amount, date and description
     public ExpenseTransaction(double amount, String date, String description) {
         this.expenseAmount = amount;
         this.date = date;
@@ -40,6 +46,12 @@ public class ExpenseTransaction {
     }
 
 
-
-
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("amount", expenseAmount);
+        json.put("date", date);
+        json.put("description", description);
+        return json;
+    }
 }

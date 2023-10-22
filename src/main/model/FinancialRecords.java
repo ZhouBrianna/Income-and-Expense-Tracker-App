@@ -1,13 +1,18 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 // Represents a financial records having a list of expense transactions and a list of income transactions
-public class FinancialRecords {
+public class FinancialRecords implements Writable {
     private final List<ExpenseTransaction> expenseTransactions;
     private final List<IncomeTransaction> incomeTransactions;
 
+    // Construct a financial records with empty list of expense transactions and income transactions
     public FinancialRecords() {
         expenseTransactions = new ArrayList<>();
         incomeTransactions = new ArrayList<>();
@@ -73,4 +78,29 @@ public class FinancialRecords {
     }
 
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("Income Transactions", incomeTransactionsToJson());
+        json.put("Expense Transactions", expenseTransactionsToJson());
+        return json;
+    }
+
+    // EFFECTS: Converts a list of income transactions to a JSON array
+    private JSONArray incomeTransactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (IncomeTransaction transaction : incomeTransactions) {
+            jsonArray.put(transaction.toJson());
+        }
+        return jsonArray;
+    }
+
+    // EFFECTS: Converts a list of expense transactions to a JSON array
+    private JSONArray expenseTransactionsToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (ExpenseTransaction transaction : expenseTransactions) {
+            jsonArray.put(transaction.toJson());
+        }
+        return jsonArray;
+    }
 }

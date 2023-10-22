@@ -11,3 +11,5 @@
 - As a user, I want to be able to calculate the total income based on the income transactions on the financial records
 - As a user, I want to be able to calculate the total expense based on the expense transactions on the financial records
 - As a user, I want to be able to calculate a net income based on the financial records
+- As a user, I want to be able to save my financial records to file
+- As a user, I want to be able to load my financial records from file
