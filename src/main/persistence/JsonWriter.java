@@ -40,6 +40,7 @@ public class JsonWriter {
     // EFFECTS: writes string to file
     private void saveToFile(String json) {
         writer.print(json);
+        writer.flush();
     }
 }
 

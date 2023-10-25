@@ -50,7 +50,7 @@ public class JsonReader {
     }
 
     // MODIFIES: financialRecords
-    // EFFECTS: parses incomeTransaction from JSON object and adds them to FinancialRecords
+    // EFFECTS: parses income Transaction from JSON object and adds them to FinancialRecords
     private void addIncomeTransactions(FinancialRecords fr, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Income Transactions");
         for (Object json : jsonArray) {
@@ -59,8 +59,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: td
-    // EFFECTS: parses incomeTransaction from JSON object and adds it to FinancialRecords
+    // MODIFIES: financialRecords
+    // EFFECTS: parses income Transaction from JSON object and adds it to FinancialRecords
     private void addIncomeTransaction(FinancialRecords fr, JSONObject jsonObject) {
         double amount = jsonObject.getDouble("amount");
         String date = jsonObject.getString("date");
@@ -69,8 +69,8 @@ public class JsonReader {
         fr.addIncomeTransaction(incomeTransaction);
     }
 
-    // MODIFIES: fr
-    // EFFECTS: parses incomeTransaction from JSON object and adds them to FinancialRecords
+    // MODIFIES: financialRecords
+    // EFFECTS: parses Expense Transaction from JSON object and adds them to FinancialRecords
     private void addExpenseTransactions(FinancialRecords fr, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("Expense Transactions");
         for (Object json : jsonArray) {
@@ -79,8 +79,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: td
-    // EFFECTS: parses incomeTransaction from JSON object and adds it to FinancialRecords
+    // MODIFIES: financialRecords
+    // EFFECTS: parses Expense Transactions from JSON object and adds it to FinancialRecords
     private void addExpenseTransaction(FinancialRecords fr, JSONObject jsonObject) {
         double amount = jsonObject.getDouble("amount");
         String date = jsonObject.getString("date");
