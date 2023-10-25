@@ -190,7 +190,7 @@ public class IncomeAndExpenseTracker {
             jsonWriter.open();
             jsonWriter.write(financialRecords);
             jsonWriter.close();
-            System.out.println("Saved" + "financialRecords" + "to" + JSON_STORE);
+            System.out.println("Saved " + "financial Records " + "to " + JSON_STORE);
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
         }
@@ -201,7 +201,7 @@ public class IncomeAndExpenseTracker {
     private void loadTransactions() {
         try {
             financialRecords = jsonReader.read();
-            System.out.println("Loaded " + "financialRecords" + "from" + JSON_STORE);
+            System.out.println("Loaded " + "financial Records " + "from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
