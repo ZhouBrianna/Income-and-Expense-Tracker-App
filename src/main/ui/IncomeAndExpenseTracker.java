@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.*;
+
 // Income and Expense Tracker Application
-public class IncomeAndExpenseTracker {
+public class IncomeAndExpenseTracker extends IncomeExpenseGUI {
     private static final String JSON_STORE = "./data/financialrecords.json";
     private FinancialRecords financialRecords;
     private Scanner input;
@@ -206,6 +208,8 @@ public class IncomeAndExpenseTracker {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
+
 
 
 }
