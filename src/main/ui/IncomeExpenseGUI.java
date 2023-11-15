@@ -1,131 +1,191 @@
 package ui;
 
+import model.ExpenseTransaction;
+import model.FinancialRecords;
+import model.IncomeTransaction;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class IncomeExpenseGUI extends JFrame {
+public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
-    private JPanel leftPanel;
-    private JPanel rightPanel;
+    private JLabel amount;
+    private JLabel description;
+    private JLabel date;
+    private JTextField amountText;
+    private JTextField descriptionText;
+    private JTextField dateText;
+    private JButton addIncomeButton;
+    private JButton addExpenseButton;
+    private JButton viewTransactionButton;
+    private JButton save;
+    private JButton load;
+    protected FinancialRecords financialRecords;
+
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
 
+    private static final String JSON_STORE = "./data/financialrecords.json";
+    private final JsonWriter jsonWriter;
+    private final JsonReader jsonReader;
+
+    // CLASS LEVEL COMMENT
     public IncomeExpenseGUI() {
-        initializeGUI();
-        createLeftPanel();
-        //createRightPanel();
+
+        financialRecords = new FinancialRecords();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+
+        setTitle("Income and Expense Tracker");
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        setLabels();
+        setTextFields();
+        setButtons();
+
         setVisible(true);
     }
 
-    // EFFECTS: initialize the GUI
-    private void initializeGUI() {
-        setTitle("Income and Expense Tracker Application");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(WIDTH, HEIGHT);
-        setLayout(new BorderLayout());
+    // Effects: ....
+    private void setLabels() {
+
+        amount = new JLabel("Amount");
+        amount.setBounds(30,20,200,50);
+        this.add(amount);
+
+        description = new JLabel("Description");
+        description.setBounds(30, 20, 200, 100);
+        this.add(description);
+
+        date = new JLabel("Date");
+        date.setBounds(30,20,200,150);
+        this.add(date);
     }
 
-    private void createLeftPanel() {
-        leftPanel = new JPanel();
-        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+    // EFFECTS:
+    private void setTextFields() {
 
-        JLabel incomeExpenseTrackerLabel = new JLabel("Income and Expense Tracker");
-        incomeExpenseTrackerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        leftPanel.add(incomeExpenseTrackerLabel);
+        amountText = new JTextField();
+        amountText.setBounds(110,30,200,30);
+        this.add(amountText);
 
-        JPanel inputPanel = createInputPanel();
-        leftPanel.add(inputPanel);
+        descriptionText = new JTextField();
+        descriptionText.setBounds(110,60,200,30);
+        this.add(descriptionText);
 
-        add(leftPanel, BorderLayout.WEST);
+        dateText = new JTextField();
+        dateText.setBounds(110,90,200,30);
+        this.add(dateText);
     }
 
-    private JPanel createInputPanel() {
 
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+    // EFFECTS:
+    private void setButtons() {
+        addIncomeButton = new JButton("Add Income");
+        addIncomeButton.setBounds(400,30,150,30);
+        this.add(addIncomeButton);
+        addIncomeButton.addActionListener(this);
 
-        JLabel addIncomeTransactionLabel = new JLabel("Add Income Transaction");
-        addIncomeTransactionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        inputPanel.add(addIncomeTransactionLabel);
+        addExpenseButton = new JButton("Add Expense");
+        addExpenseButton.setBounds(400,60,150,30);
+        this.add(addExpenseButton);
+        addExpenseButton.addActionListener(this);
 
-        JPanel amountPanel = new JPanel();
-        amountPanel.setLayout(new BoxLayout(amountPanel, BoxLayout.X_AXIS));
+        viewTransactionButton = new JButton("View Transactions");
+        viewTransactionButton.setBounds(400,90,150,30);
+        this.add(viewTransactionButton);
+        viewTransactionButton.addActionListener(this);
 
-        JLabel amountLabel = new JLabel("Amount");
-        JTextField amountField = new JTextField();
-        //amountField.setPreferredSize(new Dimension(200, 30));
-        amountField.setBounds(200,20,30,40);
-        amountPanel.add(amountLabel, BorderLayout.NORTH);
-        amountPanel.add(amountField, BorderLayout.CENTER);
+        save = new JButton("Save");
+        save.setBounds(80, 150,100,30);
+        this.add(save);
+        save.addActionListener(this);
 
-        JButton addIncomeButton = new JButton("Add Income");
-        amountPanel.add(addIncomeButton, BorderLayout.SOUTH);
+        load = new JButton("Load");
+        load.setBounds(200,150,100,30);
+        this.add(load);
+        load.addActionListener(this);
 
-        inputPanel.add(amountPanel);
-
-        return inputPanel;
     }
 
-    private void createRightPanel() {
-        rightPanel = new JPanel();
-        rightPanel.setLayout(new BorderLayout());
+    private void handleAddIncome() {
 
-        JLabel budgetPlannerLabel = new JLabel("Budget Planner");
-        budgetPlannerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        rightPanel.add(budgetPlannerLabel, BorderLayout.CENTER);
+        double amount = Double.parseDouble(amountText.getText());
+        String description = descriptionText.getText();
+        String date = dateText.getText();
 
-        add(rightPanel, BorderLayout.CENTER);
+        if (amount < 0.0) {
+            System.out.println("Cannot input negative income amount, please try again");
+            return;
+        }
+
+        IncomeTransaction incomeTransaction = new IncomeTransaction(amount, date, description);
+        financialRecords.addIncomeTransaction(incomeTransaction);
+
+    }
+
+    private void handleAddIExpense() {
+        double amount = Double.parseDouble(amountText.getText());
+        String description = descriptionText.getText();
+        String date = dateText.getText();
+
+        if (amount < 0.0) {
+            System.out.println("Cannot input negative expense amount, please try again");
+            return;
+        }
+
+        ExpenseTransaction expenseTransaction = new ExpenseTransaction(amount, date, description);
+        financialRecords.addExpenseTransaction(expenseTransaction);
+    }
+
+    private void handleSave() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(financialRecords);
+            jsonWriter.close();
+            System.out.println("Saved financial records to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void handleLoad() {
+        try {
+            financialRecords = jsonReader.read();
+            System.out.println("Loaded financial records from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addIncomeButton) {
+            handleAddIncome();
+        }
+
+        if (e.getSource() == addExpenseButton) {
+            handleAddIExpense();
+        }
+
+        if (e.getSource() == save) {
+            handleSave();
+        }
+
+        if (e.getSource() == load) {
+            handleLoad();
+        }
+
+        if (e.getSource() == viewTransactionButton) {
+            new ViewTransaction(financialRecords).setVisible(true);
+        }
     }
 }
-
-
-
-
-
-//    public IncomeExpenseGUI() {
-//        this.setTitle("Income and Expense Tracker Application");
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setSize(WIDTH, HEIGHT);
-//
-//        leftPanel = new JPanel();
-//        leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-//
-//        JLabel incomeExpenseTrackerLabel = new JLabel("Income and Expense Tracker");
-//        incomeExpenseTrackerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        leftPanel.add(incomeExpenseTrackerLabel);
-//
-//        JPanel inputPanel = new JPanel(new BorderLayout());
-//
-//        JLabel addIncomeTransactionLabel = new JLabel("Add Income Transaction");
-//        //addIncomeTransactionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//        inputPanel.add(addIncomeTransactionLabel, BorderLayout.NORTH);
-//
-//        JPanel inputPanel1 = new JPanel();
-//        inputPanel1.setLayout(new BoxLayout(inputPanel, BoxLayout.X_AXIS));
-//
-//        JLabel amountLabel = new JLabel("Amount");
-//        inputPanel.add(amountLabel);
-//
-//        JTextField amountField = new JTextField();
-//        amountField.setMaximumSize(new Dimension(200, 40));
-//        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
-//        inputPanel.add(amountField);
-//
-//        JButton addIncomeButton = new JButton("Add Income");
-//        inputPanel.add(addIncomeButton, BorderLayout.SOUTH);
-//
-//        leftPanel.add(inputPanel);
-//
-//        rightPanel = new JPanel();
-//        rightPanel.setLayout(new BorderLayout());
-//        JLabel budgetPlannerLabel = new JLabel("Budget Planner");
-//        budgetPlannerLabel.setHorizontalAlignment(SwingConstants.CENTER);
-//        rightPanel.add(budgetPlannerLabel, BorderLayout.CENTER);
-//
-//        this.add(leftPanel, BorderLayout.WEST);
-//        this.add(rightPanel, BorderLayout.CENTER);
-//
-//        this.setVisible(true);
-//    }
-
 

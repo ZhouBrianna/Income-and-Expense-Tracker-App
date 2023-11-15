@@ -14,7 +14,7 @@ import java.util.Scanner;
 import javax.swing.*;
 
 // Income and Expense Tracker Application
-public class IncomeAndExpenseTracker extends IncomeExpenseGUI {
+public class IncomeAndExpenseTracker {
     private static final String JSON_STORE = "./data/financialrecords.json";
     private FinancialRecords financialRecords;
     private Scanner input;
