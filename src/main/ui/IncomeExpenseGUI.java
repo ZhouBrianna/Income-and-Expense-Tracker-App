@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Income and Expense Application Graphical User Interface
 public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
     private JLabel amount;
@@ -25,6 +26,8 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
     private JButton viewTransactionButton;
     private JButton save;
     private JButton load;
+    private JLabel moneyLabel;
+    private ImageIcon money;
     protected FinancialRecords financialRecords;
 
     public static final int WIDTH = 800;
@@ -34,7 +37,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
     private final JsonWriter jsonWriter;
     private final JsonReader jsonReader;
 
-    // CLASS LEVEL COMMENT
+    // Construct Income and Expense Application Graphical User Interface
     public IncomeExpenseGUI() {
 
         financialRecords = new FinancialRecords();
@@ -53,7 +56,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    // Effects: ....
+    // Effects: set labels and set locations of the labels
     private void setLabels() {
 
         amount = new JLabel("Amount");
@@ -61,15 +64,21 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         this.add(amount);
 
         description = new JLabel("Description");
-        description.setBounds(30, 20, 200, 100);
+        description.setBounds(30, 25, 200, 100);
         this.add(description);
 
         date = new JLabel("Date");
-        date.setBounds(30,20,200,150);
+        date.setBounds(30,30,200,150);
         this.add(date);
+
+        money = new ImageIcon("data/money.png");
+        moneyLabel = new JLabel(money);
+        moneyLabel.setBounds(0,200,300,230);
+        add(moneyLabel);
+
     }
 
-    // EFFECTS:
+    // EFFECTS: set text fields
     private void setTextFields() {
 
         amountText = new JTextField();
@@ -86,7 +95,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
     }
 
 
-    // EFFECTS:
+    // EFFECTS: set buttons
     private void setButtons() {
         addIncomeButton = new JButton("Add Income");
         addIncomeButton.setBounds(400,30,150,30);
@@ -108,6 +117,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         this.add(save);
         save.addActionListener(this);
 
+
         load = new JButton("Load");
         load.setBounds(200,150,100,30);
         this.add(load);
@@ -115,6 +125,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
     }
 
+    // EFFECTS: add income to list of transactions when "Add Income" is clicked
     private void handleAddIncome() {
 
         double amount = Double.parseDouble(amountText.getText());
@@ -122,7 +133,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         String date = dateText.getText();
 
         if (amount < 0.0) {
-            System.out.println("Cannot input negative income amount, please try again");
+            showErrorDialog("Cannot input negative income amount, please try again");
             return;
         }
 
@@ -131,13 +142,14 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
     }
 
-    private void handleAddIExpense() {
+    // EFFECTS: add expense to list of transactions when "Add Expense" is clicked
+    private void handleAddExpense() {
         double amount = Double.parseDouble(amountText.getText());
         String description = descriptionText.getText();
         String date = dateText.getText();
 
         if (amount < 0.0) {
-            System.out.println("Cannot input negative expense amount, please try again");
+            showErrorDialog("Cannot input negative expense amount, please try again");
             return;
         }
 
@@ -145,6 +157,12 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         financialRecords.addExpenseTransaction(expenseTransaction);
     }
 
+    // EFFECTS: show an error dialog with the given message
+    private void showErrorDialog(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // EFFECTS: saves the transaction to file
     private void handleSave() {
         try {
             jsonWriter.open();
@@ -156,6 +174,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: load the transaction from file
     private void handleLoad() {
         try {
             financialRecords = jsonReader.read();
@@ -165,6 +184,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: respond when buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addIncomeButton) {
@@ -172,7 +192,7 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == addExpenseButton) {
-            handleAddIExpense();
+            handleAddExpense();
         }
 
         if (e.getSource() == save) {

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.*;
 
 // Income and Expense Tracker Application
 public class IncomeAndExpenseTracker {

@@ -2,8 +2,6 @@ package persistence;
 
 import model.FinancialRecords;
 import org.json.JSONObject;
-
-import javax.swing.*;
 import java.io.*;
 
 // Represents a writer that writes JSON representation of FinancialRecords to file

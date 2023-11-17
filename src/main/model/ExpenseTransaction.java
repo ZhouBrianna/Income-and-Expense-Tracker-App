@@ -3,7 +3,6 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.util.Objects;
 
 // Represents an expense transaction having a ExpenseAmount, date and income description.
 public class ExpenseTransaction implements Writable {

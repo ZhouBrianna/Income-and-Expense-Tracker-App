@@ -1,24 +1,4 @@
 {
-    "Expense Transactions": [
-        {
-            "date": "2023/11/14",
-            "amount": 40,
-            "description": "meat"
-        },
-        {
-            "date": "2023/11/14",
-            "amount": 11.1,
-            "description": "grapes"
-        },
-        {
-            "date": "2023/11/14",
-            "amount": 10.9,
-            "description": "dinner"
-        }
-    ],
-    "Income Transactions": [{
-        "date": "2023/11/14",
-        "amount": 200,
-        "description": "salary"
-    }]
+    "Expense Transactions": [],
+    "Income Transactions": []
 }
