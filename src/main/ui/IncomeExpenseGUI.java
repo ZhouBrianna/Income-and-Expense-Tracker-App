@@ -7,6 +7,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -18,20 +19,24 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
     private JLabel amount;
     private JLabel description;
     private JLabel date;
+    private JLabel totalIncomeLabel;
+    private JLabel totalExpenseLabel;
+    private JLabel netIncomeLabel;
+    private JLabel moneyLabel;
+    private ImageIcon money;
     private JTextField amountText;
     private JTextField descriptionText;
     private JTextField dateText;
     private JButton addIncomeButton;
     private JButton addExpenseButton;
     private JButton viewTransactionButton;
+    private JButton calculateButton;
     private JButton save;
     private JButton load;
-    private JLabel moneyLabel;
-    private ImageIcon money;
     protected FinancialRecords financialRecords;
 
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
+    public static final int WIDTH = 700;
+    public static final int HEIGHT = 500;
 
     private static final String JSON_STORE = "./data/financialrecords.json";
     private final JsonWriter jsonWriter;
@@ -48,6 +53,8 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        Color backgroundColor = new Color(255, 219, 73);
+        getContentPane().setBackground(backgroundColor);
 
         setLabels();
         setTextFields();
@@ -71,11 +78,22 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         date.setBounds(30,30,200,150);
         this.add(date);
 
+        totalIncomeLabel = new JLabel("Total Income");
+        totalIncomeLabel.setBounds(430,180,200,150);
+        this.add(totalIncomeLabel);
+
+        totalExpenseLabel = new JLabel("Total Expense");
+        totalExpenseLabel.setBounds(430,220,200,150);
+        this.add(totalExpenseLabel);
+
+        netIncomeLabel = new JLabel("Net Income");
+        netIncomeLabel.setBounds(430,260,200,150);
+        this.add(netIncomeLabel);
+
         money = new ImageIcon("data/money.png");
         moneyLabel = new JLabel(money);
         moneyLabel.setBounds(0,200,300,230);
         add(moneyLabel);
-
     }
 
     // EFFECTS: set text fields
@@ -97,32 +115,24 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
     // EFFECTS: set buttons
     private void setButtons() {
-        addIncomeButton = new JButton("Add Income");
-        addIncomeButton.setBounds(400,30,150,30);
-        this.add(addIncomeButton);
-        addIncomeButton.addActionListener(this);
 
-        addExpenseButton = new JButton("Add Expense");
-        addExpenseButton.setBounds(400,60,150,30);
-        this.add(addExpenseButton);
-        addExpenseButton.addActionListener(this);
+        addIncomeButton = createButton("Add Income", 400,30,150,30);
+        addExpenseButton = createButton("Add Expense", 400,60,150,30);
+        viewTransactionButton = createButton("View Transactions", 400,90,150,30);
+        calculateButton = createButton("Calculate", 400, 150, 150, 30);
+        save = createButton("Save", 80, 150,100,30);
+        load = createButton("Load", 200,150,100,30);
+    }
 
-        viewTransactionButton = new JButton("View Transactions");
-        viewTransactionButton.setBounds(400,90,150,30);
-        this.add(viewTransactionButton);
-        viewTransactionButton.addActionListener(this);
+    // EFFECTS: create buttons by setting it bounds, adds it to the frame, attaches the ActionListener,
+    //          and then returns the created button.
+    private JButton createButton(String text, int x, int y, int width, int height) {
 
-        save = new JButton("Save");
-        save.setBounds(80, 150,100,30);
-        this.add(save);
-        save.addActionListener(this);
-
-
-        load = new JButton("Load");
-        load.setBounds(200,150,100,30);
-        this.add(load);
-        load.addActionListener(this);
-
+        JButton button = new JButton(text);
+        button.setBounds(x, y, width, height);
+        this.add(button);
+        button.addActionListener(this);
+        return button;
     }
 
     // EFFECTS: add income to list of transactions when "Add Income" is clicked
@@ -134,6 +144,11 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
         if (amount < 0.0) {
             showErrorDialog("Cannot input negative income amount, please try again");
+            return;
+        }
+
+        if (description.isEmpty() || date.isEmpty()) {
+            showErrorDialog("Cannot be empty, please provide valid input");
             return;
         }
 
@@ -150,6 +165,11 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
         if (amount < 0.0) {
             showErrorDialog("Cannot input negative expense amount, please try again");
+            return;
+        }
+
+        if (description.isEmpty() || date.isEmpty()) {
+            showErrorDialog("Cannot be empty, please provide valid input");
             return;
         }
 
@@ -184,6 +204,24 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: update and display the total income label
+    private void calculateTotalIncome() {
+        double totalIncome = financialRecords.calculatedTotalIncome();
+        totalIncomeLabel.setText("Total Income: $" + String.format("%.2f", totalIncome));
+    }
+
+    // EFFECTS: update and display the total expense label
+    private void calculateTotalExpense() {
+        double totalExpense = financialRecords.calculatedTotalExpense();
+        totalExpenseLabel.setText("Total Expense: $" + String.format("%.2f", totalExpense));
+    }
+
+    // EFFECTS: update and display the net income label
+    private void calculateNetIncome() {
+        double netIncome = financialRecords.calculateNetIncome();
+        netIncomeLabel.setText("Net Income: $" + String.format("%.2f", netIncome));
+    }
+
     // EFFECTS: respond when buttons are clicked
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -201,6 +239,12 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
 
         if (e.getSource() == load) {
             handleLoad();
+        }
+
+        if (e.getSource() == calculateButton) {
+            calculateTotalIncome();
+            calculateTotalExpense();
+            calculateNetIncome();
         }
 
         if (e.getSource() == viewTransactionButton) {

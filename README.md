@@ -13,3 +13,11 @@
 - As a user, I want to be able to calculate a net income based on the financial records
 - As a user, I want to be able to save my financial records (list of income transactions and expense transaction) to file
 - As a user, I want to be able to load my financial records (list of income transactions and expense transaction) from file
+
+## Instructions for Grader (Phase 3)
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking buttons labelled "Add Income" or "Add Expense" to add an income or an expense to the list of financial records.
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "View Transactions" to view list of transactions in a new window.
+- You can calculate the total income, total expense, and net income by clicking the button "Calculate".
+- You can locate my visual component on the window when the application starts.
+- You can save the state of my application by clicking the button labelled "Save".
+- You can reload the state of my application by clicking the button labelled "Load".

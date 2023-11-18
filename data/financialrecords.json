@@ -1,4 +1,8 @@
 {
     "Expense Transactions": [],
-    "Income Transactions": []
+    "Income Transactions": [{
+        "date": "...",
+        "amount": 10,
+        "description": "..."
+    }]
 }
