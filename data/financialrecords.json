@@ -1,8 +1,31 @@
 {
-    "Expense Transactions": [],
-    "Income Transactions": [{
-        "date": "...",
-        "amount": 10,
-        "description": "..."
-    }]
+    "Expense Transactions": [
+        {
+            "date": "...",
+            "amount": 200,
+            "description": "..."
+        },
+        {
+            "date": "...",
+            "amount": 300,
+            "description": "..."
+        }
+    ],
+    "Income Transactions": [
+        {
+            "date": "...",
+            "amount": 200,
+            "description": "..."
+        },
+        {
+            "date": "...",
+            "amount": 300,
+            "description": "..."
+        },
+        {
+            "date": "...",
+            "amount": 700,
+            "description": "..."
+        }
+    ]
 }

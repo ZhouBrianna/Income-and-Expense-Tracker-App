@@ -16,8 +16,8 @@
 
 ## Instructions for Grader (Phase 3)
 - You can generate the first required action related to the user story "adding multiple Xs to a Y" by clicking buttons labelled "Add Income" or "Add Expense" to add an income or an expense to the list of financial records.
-- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "View Transactions" to view list of transactions in a new window.
-- You can calculate the total income, total expense, and net income by clicking the button "Calculate".
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by clicking the button labelled "Calculate" to calculate the total income, total expense, and net income that are being added the list of transactions
+- You can view transactions by clicking the button labelled "View Transaction".
 - You can locate my visual component on the window when the application starts.
 - You can save the state of my application by clicking the button labelled "Save".
 - You can reload the state of my application by clicking the button labelled "Load".

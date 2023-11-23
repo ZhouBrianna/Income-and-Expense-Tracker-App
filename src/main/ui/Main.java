@@ -11,12 +11,6 @@ public class Main {
             IncomeExpenseGUI incomeExpenseGUI = new IncomeExpenseGUI();
             incomeExpenseGUI.setVisible(true);
         });
-
-        try {
-            new IncomeAndExpenseTracker();
-        } catch (FileNotFoundException e) {
-            System.out.println("Unable to run application: file not found");
-        }
     }
 }
 
