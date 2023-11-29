@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -60,7 +62,15 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         setTextFields();
         setButtons();
 
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                handleWindowClosing();
+            }
+        });
+
         setVisible(true);
+
     }
 
     // Effects: set labels and set locations of the labels
@@ -120,8 +130,8 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         addExpenseButton = createButton("Add Expense", 400,60,150,30);
         viewTransactionButton = createButton("View Transactions", 400,90,150,30);
         calculateButton = createButton("Calculate", 400, 150, 150, 30);
-        save = createButton("Save", 80, 150,100,30);
-        load = createButton("Load", 200,150,100,30);
+        save = createButton("Save", 30, 150,80,30);
+        load = createButton("Load", 130,150,80,30);
     }
 
     // EFFECTS: create buttons by setting it bounds, adds it to the frame, attaches the ActionListener,
@@ -221,6 +231,13 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         double netIncome = financialRecords.calculateNetIncome();
         netIncomeLabel.setText("Net Income: $" + String.format("%.2f", netIncome));
     }
+
+    // EFFECTS: handle the window closing event
+    private void handleWindowClosing() {
+        financialRecords.printEvents();
+    }
+
+
 
     // EFFECTS: respond when buttons are clicked
     @Override

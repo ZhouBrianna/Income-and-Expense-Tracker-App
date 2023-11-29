@@ -1,5 +1,7 @@
 package persistence;
 
+import model.Event;
+import model.EventLog;
 import model.FinancialRecords;
 import org.json.JSONObject;
 import java.io.*;
@@ -40,6 +42,7 @@ public class JsonWriter {
     private void saveToFile(String json) {
         writer.print(json);
         writer.flush();
+        EventLog.getInstance().logEvent(new Event("Application Saved"));
     }
 }
 

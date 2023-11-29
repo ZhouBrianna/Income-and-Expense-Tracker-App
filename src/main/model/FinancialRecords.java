@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 // Represents a financial records having a list of expense transactions and a list of income transactions
@@ -21,11 +22,25 @@ public class FinancialRecords implements Writable {
     // EFFECTS: add an income transaction to the record
     public void addIncomeTransaction(IncomeTransaction transaction) {
         incomeTransactions.add(transaction);
+
+        String eventMessage = String.format(
+                "Added an income transaction: Date: %s, Description: %s, Amount: $%.2f",
+                transaction.getDate(), transaction.getDescription(), transaction.getIncomeAmount()
+        );
+
+        EventLog.getInstance().logEvent(new Event(eventMessage));
     }
 
     // EFFECTS: add an expense transaction to the record
     public void addExpenseTransaction(ExpenseTransaction transaction) {
         expenseTransactions.add(transaction);
+
+        String eventMessage = String.format(
+                "Added an expense transaction: Date: %s, Description: %s, Amount: $%.2f",
+                transaction.getDate(), transaction.getDescription(), transaction.getExpenseAmount()
+        );
+
+        EventLog.getInstance().logEvent(new Event(eventMessage));
     }
 
     // EFFECTS: delete an income transaction to the record
@@ -41,11 +56,14 @@ public class FinancialRecords implements Writable {
     // EFFECTS: calculate the total income
     public double calculatedTotalIncome() {
         double totalIncome = 0;
+        double lastLoggedTotalIncome = 0;
         for (IncomeTransaction transaction : incomeTransactions) {
             totalIncome = totalIncome + transaction.getIncomeAmount();
         }
 
+        EventLog.getInstance().logEvent(new Event("Calculated Total Income: $" + totalIncome));
         return totalIncome;
+
     }
 
     // EFFECTS: calculate the total expense
@@ -55,6 +73,7 @@ public class FinancialRecords implements Writable {
             totalExpense = totalExpense + transaction.getExpenseAmount();
         }
 
+        EventLog.getInstance().logEvent(new Event("Calculated Total Expense: $" + totalExpense));
         return totalExpense;
     }
 
@@ -64,16 +83,19 @@ public class FinancialRecords implements Writable {
         double totalIncome = calculatedTotalIncome();
         double totalExpense = calculatedTotalExpense();
         netIncome = totalIncome - totalExpense;
+        EventLog.getInstance().logEvent(new Event("Calculated Net Income: $" + netIncome));
         return netIncome;
     }
 
     // EFFECTS: Get a list of expense transactions
     public List<ExpenseTransaction> getExpenseTransactions() {
+        EventLog.getInstance().logEvent(new Event("Viewed list of expense transactions"));
         return expenseTransactions;
     }
 
     // EFFECTS: Get a list of income transactions
     public List<IncomeTransaction> getIncomeTransactions() {
+        EventLog.getInstance().logEvent(new Event("Viewed list of income transactions"));
         return incomeTransactions;
     }
 
@@ -102,5 +124,16 @@ public class FinancialRecords implements Writable {
             jsonArray.put(transaction.toJson());
         }
         return jsonArray;
+    }
+
+    // EFFECTS: print all events in the event log
+    public void printEvents() {
+        EventLog eventLog = EventLog.getInstance();
+        Iterator<Event> iterator = eventLog.iterator();
+
+        while (iterator.hasNext()) {
+            Event event = iterator.next();
+            System.out.println(event.toString());
+        }
     }
 }

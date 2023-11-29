@@ -1,8 +1,6 @@
 package persistence;
 
-import model.ExpenseTransaction;
-import model.IncomeTransaction;
-import model.FinancialRecords;
+import model.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -27,7 +25,9 @@ public class JsonReader {
     public FinancialRecords read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
+        EventLog.getInstance().logEvent(new Event("Application Reloaded"));
         return parseFinancialRecords(jsonObject);
+
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -37,6 +37,7 @@ public class JsonReader {
         try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
             stream.forEach(s -> contentBuilder.append(s));
         }
+
 
         return contentBuilder.toString();
     }

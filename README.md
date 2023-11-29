@@ -21,3 +21,30 @@
 - You can locate my visual component on the window when the application starts.
 - You can save the state of my application by clicking the button labelled "Save".
 - You can reload the state of my application by clicking the button labelled "Load".
+
+## Phase 4: Task 2
+
+Wed Nov 29 12:13:08 PST 2023
+Added an income transaction: Date: 2023/11/28, Description: gift cards, Amount: $200.00
+Wed Nov 29 12:13:37 PST 2023
+Added an expense transaction: Date: 2023/11/29, Description: lunch, Amount: $10.00
+Wed Nov 29 12:13:39 PST 2023
+Viewed list of income transactions
+Wed Nov 29 12:13:39 PST 2023
+Viewed list of expense transactions
+Wed Nov 29 12:13:41 PST 2023
+Calculated Total Income: $200.0
+Wed Nov 29 12:13:41 PST 2023
+Calculated Total Expense: $10.0
+Wed Nov 29 12:13:41 PST 2023
+Calculated Net Income: $190.0
+Wed Nov 29 12:13:42 PST 2023
+Application Saved
+
+## Phase 4: Task 3
+If I have more time to work on this project, I will reduce the duplication between `IncomeTransaction` and `ExpenseTransaction`. 
+These two classes have shared behaviours, so the refactoring involves creating an abstract class `Transaction`. 
+This abstract class will encapsulates the shared behavior between the `IncomeTransaction` and `ExpenseTransaction`. 
+This refactoring address the redundancy in the code by pulling out common fields and methods in `IncomeTransaction` and `ExpenseTransaction` classes.
+Both `IncomeTransaction` and `ExpenseTransaction` will then extend `Transaction`, inheriting the common behaviors 
+while allowing each class to maintain its specific methods or behavior. 
