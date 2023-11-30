@@ -125,15 +125,4 @@ public class FinancialRecords implements Writable {
         }
         return jsonArray;
     }
-
-    // EFFECTS: print all events in the event log
-    public void printEvents() {
-        EventLog eventLog = EventLog.getInstance();
-        Iterator<Event> iterator = eventLog.iterator();
-
-        while (iterator.hasNext()) {
-            Event event = iterator.next();
-            System.out.println(event.toString());
-        }
-    }
 }

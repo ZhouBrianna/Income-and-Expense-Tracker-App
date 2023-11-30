@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.ExpenseTransaction;
 import model.FinancialRecords;
 import model.IncomeTransaction;
@@ -14,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Iterator;
 
 // Income and Expense Application Graphical User Interface
 public class IncomeExpenseGUI extends JFrame implements ActionListener {
@@ -232,10 +235,22 @@ public class IncomeExpenseGUI extends JFrame implements ActionListener {
         netIncomeLabel.setText("Net Income: $" + String.format("%.2f", netIncome));
     }
 
+    // EFFECTS: print all events in the event log
+    public void printEvents() {
+        EventLog eventLog = EventLog.getInstance();
+        Iterator<model.Event> iterator = eventLog.iterator();
+
+        while (iterator.hasNext()) {
+            Event event = iterator.next();
+            System.out.println(event.toString());
+        }
+    }
+
     // EFFECTS: handle the window closing event
     private void handleWindowClosing() {
-        financialRecords.printEvents();
+        printEvents();
     }
+
 
 
 

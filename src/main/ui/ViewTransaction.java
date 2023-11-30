@@ -13,7 +13,7 @@ public class ViewTransaction extends JFrame {
     private final JTextArea transactions;
     private final FinancialRecords financialRecords;
 
-    // Constructs a view transaction window with empty financial records
+    // Constructs a view transaction window with financial records
     public ViewTransaction(FinancialRecords financialRecords) {
         this.financialRecords = financialRecords;
         setTitle("Transactions");

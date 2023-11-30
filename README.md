@@ -24,22 +24,22 @@
 
 ## Phase 4: Task 2
 
-Wed Nov 29 12:13:08 PST 2023
-Added an income transaction: Date: 2023/11/28, Description: gift cards, Amount: $200.00
-Wed Nov 29 12:13:37 PST 2023
-Added an expense transaction: Date: 2023/11/29, Description: lunch, Amount: $10.00
-Wed Nov 29 12:13:39 PST 2023
-Viewed list of income transactions
-Wed Nov 29 12:13:39 PST 2023
-Viewed list of expense transactions
-Wed Nov 29 12:13:41 PST 2023
-Calculated Total Income: $200.0
-Wed Nov 29 12:13:41 PST 2023
-Calculated Total Expense: $10.0
-Wed Nov 29 12:13:41 PST 2023
-Calculated Net Income: $190.0
-Wed Nov 29 12:13:42 PST 2023
-Application Saved
+- Wed Nov 29 12:13:08 PST 2023
+- Added an income transaction: Date: 2023/11/28, Description: gift cards, Amount: $200.00
+- Wed Nov 29 12:13:37 PST 2023
+- Added an expense transaction: Date: 2023/11/29, Description: lunch, Amount: $10.00
+- Wed Nov 29 12:13:39 PST 2023
+- Viewed list of income transactions
+- Wed Nov 29 12:13:39 PST 2023
+- Viewed list of expense transactions
+- Wed Nov 29 12:13:41 PST 2023
+- Calculated Total Income: $200.0
+- Wed Nov 29 12:13:41 PST 2023
+- Calculated Total Expense: $10.0
+- Wed Nov 29 12:13:41 PST 2023
+- Calculated Net Income: $190.0
+- Wed Nov 29 12:13:42 PST 2023
+- Application Saved
 
 ## Phase 4: Task 3
 If I have more time to work on this project, I will reduce the duplication between `IncomeTransaction` and `ExpenseTransaction`. 
