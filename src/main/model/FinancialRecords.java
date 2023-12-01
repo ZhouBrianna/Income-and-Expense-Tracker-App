@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 // Represents a financial records having a list of expense transactions and a list of income transactions
@@ -56,7 +55,6 @@ public class FinancialRecords implements Writable {
     // EFFECTS: calculate the total income
     public double calculatedTotalIncome() {
         double totalIncome = 0;
-        double lastLoggedTotalIncome = 0;
         for (IncomeTransaction transaction : incomeTransactions) {
             totalIncome = totalIncome + transaction.getIncomeAmount();
         }
